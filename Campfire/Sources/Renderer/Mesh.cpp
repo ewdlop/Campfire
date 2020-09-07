@@ -162,9 +162,9 @@ std::vector<SharedPtr<Texture>> Mesh::LoadMaterialTextures(aiMaterial* mat, aiTe
         }
         if (!inCache)
         {
-            LOG_INFO("Loading Texture from {0}", path);
-            texture = Texture2D::Create(path.c_str());
-            textureCache.push_back(texture);
+            //LOG_INFO("Loading Texture from {0}", path);
+            //texture = Texture2D::Create(path.c_str());
+            //textureCache.push_back(texture);
         }
 
         textures.push_back(texture);

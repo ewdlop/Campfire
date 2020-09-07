@@ -1,5 +1,8 @@
 #include "Scene/Scene.h"
 #include "Core/Random.h"
+#include "Core/Log.h"
+#include <chrono>
+#include <thread>
 #include <imgui.h>
 
 #include "Renderer/SceneRenderer.h"
@@ -8,7 +11,7 @@
 #include "Scripting/CameraController.h"
 #include "Scripting/PlayerController.h"
 #include "Audio/AudioSystem.h"
-
+#include "JobSystem/JobSystem.h"
 #include <Tracy.hpp>
 
 Scene::Scene(bool isNewScene)
@@ -62,6 +65,32 @@ void Scene::Init()
         cube.AddComponent<RigidbodyComponent>();
         cube.GetComponent<RigidbodyComponent>().rigidbody->type = Rigidbody::BodyType::DYNAMIC;
     }
+
+    //{
+    //    ZoneScopedN("SingleThread");
+    //    int size = 2;
+    //    for (int i = 0; i < size; ++i)
+    //    {
+    //        auto cube = CreateEntity("Cube");
+    //        cube.AddComponent<MeshComponent>("../Assets/Models/backpack/backpack.obj");
+    //        cube.GetComponent<TransformComponent>().position = glm::vec3(-1.0f + i * 1.0f, 10.0f, 0.0f);
+    //    }
+    //}
+
+    //{
+    //    ZoneScopedN("MultiThreaded");
+    //    int size = 5;
+    //    for (int i = 0; i < size; ++i)
+    //    {
+    //        JobSystem::instance->Submit(std::bind([this](int i)
+    //        {
+    //            auto cube = CreateEntity("Cube");
+    //            cube.AddComponent<MeshComponent>("../Assets/Models/backpack/backpack.obj");
+    //            cube.GetComponent<TransformComponent>().position = glm::vec3(-1.0f + i * 20.0f, 10.0f, 0.0f);
+    //        }, i));
+    //    }
+    //}
+
 
     {
         auto floor = CreateEntity("Floor");
@@ -356,6 +385,7 @@ void Scene::OnEvent(Event& e)
 
 Entity Scene::CreateEntity(const std::string& name, uint64_t ID)
 {
+    std::lock_guard<std::mutex> lock(mutex);
     auto entity = Entity(registry.create(), this);
 
     // Default components all entities should have
@@ -370,6 +400,7 @@ Entity Scene::CreateEntity(const std::string& name, uint64_t ID)
 
 Entity Scene::CreateEntity(const std::string& name)
 {
+    std::lock_guard<std::mutex> lock(mutex);
     auto entity = Entity(registry.create(), this);
 
     // Random ID for access in hashmap

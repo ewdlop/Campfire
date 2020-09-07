@@ -47,6 +47,7 @@ private:
     entt::entity sceneEntity;
     entt::registry registry;
     std::map<uint64_t, Entity> entityMap;
+    std::mutex mutex;
 };
 
 #endif // SCENE_H
