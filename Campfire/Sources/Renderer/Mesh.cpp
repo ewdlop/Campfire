@@ -114,27 +114,27 @@ Submesh Mesh::LoadSubmesh(aiMesh* mesh, const aiScene* scene)
         }
     }
 
-    if (mesh->mMaterialIndex >= 0)
-    {
-        // TODO check if there exists Albedo, specular, normal, bump maps, etc
-        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-        std::vector<SharedPtr<Texture>> diffuseMaps = LoadMaterialTextures(material,
-                aiTextureType_DIFFUSE, "texture_diffuse");
+    //if (mesh->mMaterialIndex >= 0)
+    //{
+    //    // TODO check if there exists Albedo, specular, normal, bump maps, etc
+    //    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+    //    std::vector<SharedPtr<Texture>> diffuseMaps = LoadMaterialTextures(material,
+    //            aiTextureType_DIFFUSE, "texture_diffuse");
 
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    //    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
-        std::vector<SharedPtr<Texture>> specularMaps = LoadMaterialTextures(
-                material, aiTextureType_SPECULAR, "texture_specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    //    std::vector<SharedPtr<Texture>> specularMaps = LoadMaterialTextures(
+    //            material, aiTextureType_SPECULAR, "texture_specular");
+    //    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-        std::vector<SharedPtr<Texture>> normalMaps = LoadMaterialTextures(
-                material, aiTextureType_NORMALS, "texture_normal");
-        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-    }
-    else
-    {
-        LOG_WARN("No Textures associated with {0}", name);
-    }
+    //    std::vector<SharedPtr<Texture>> normalMaps = LoadMaterialTextures(
+    //            material, aiTextureType_NORMALS, "texture_normal");
+    //    textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+    //}
+    //else
+    //{
+    //    LOG_WARN("No Textures associated with {0}", name);
+    //}
 
     return Submesh(vertices, indices, textures);
 }

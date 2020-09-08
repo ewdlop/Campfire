@@ -11,7 +11,13 @@
 #include "Renderer/SceneRenderer.h"
 #include "Renderer/Text.h"
 
+#include "Core/Timer.h"
+#include <string>
+
+#include "JobSystem/JobSystem.h"
+
 #include <Tracy.hpp>
+
 
 // TODO refactor task: FBOs should be handled by a renderer
 SharedPtr<Framebuffer> gameCamFBO;
@@ -23,6 +29,15 @@ EditorLayer::EditorLayer()
     editorScene = CreateSharedPtr<Scene>();
     runtimeScene = CreateSharedPtr<Scene>(false);
     activeScene = editorScene;
+}
+
+static std::mutex meshMutex;
+static void LoadMesh(std::vector<SharedPtr<Mesh>>* meshes, std::string filepath)
+{
+    auto mesh = Mesh::Create(filepath);
+
+    std::lock_guard<std::mutex> lock(meshMutex);
+    meshes->emplace_back(mesh);
 }
 
 void EditorLayer::OnAttach()
@@ -37,6 +52,30 @@ void EditorLayer::OnAttach()
     gameCamFBO = Framebuffer::Create(1600, 900);
 
     postProcessShader = ShaderManager::Create("postprocess", "../Campfire/Shaders/postprocess.vert", "../Campfire/Shaders/postprocess.frag");
+
+    std::string meshPath = "../Assets/Models/backpack/backpack.obj";
+
+    int count = 1;
+#define LOAD 1
+#if LOAD == 0
+    Timer timer("Jobsystem load");
+    for (int i = 0; i < count; ++i)
+    {
+        JobSystem::instance->Submit(std::bind(&LoadMesh, &meshes, meshPath));
+    }
+#elif LOAD == 1
+    Timer timer("ASYNC load");
+    for (int i = 0; i < count; ++i)
+    {
+        futures.push_back(std::async(std::launch::async, LoadMesh, &meshes, meshPath));
+    }
+#elif LOAD == 2
+    Timer timer("SingleThreaded load");
+    for (int i = 0; i < count; ++i)
+    {
+        meshes.push_back(Mesh::Create(meshPath));
+    }
+#endif
 }
 
 void EditorLayer::OnDetach()

@@ -30,6 +30,7 @@ struct Submesh
         : vertices(v), indices(i), textures(t)
     {
         // Load render data
+        /*
         vertexArray = VertexArray::Create();
         vertexArray->Bind();
 
@@ -50,6 +51,7 @@ struct Submesh
 
         buffer->Unbind();
         vertexArray->Unbind();
+        */
     }
 
     uint32_t baseVertex;

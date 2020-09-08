@@ -14,6 +14,9 @@
 #include "Editor/Widgets/InspectorWidget.h"
 #include "Editor/Widgets/TransformWidget.h"
 
+#include <vector>
+#include <future>
+
 class EditorLayer : public Layer
 {
 public:
@@ -83,6 +86,9 @@ private:
         PAUSE
     };
     State state = State::STOP;
+
+    std::vector<SharedPtr<Mesh>> meshes;
+    std::vector<std::future<void>> futures;
 };
 
 #endif // EDITOR_LAYER_H

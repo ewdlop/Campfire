@@ -18,7 +18,9 @@ struct Timer
 
     ~Timer()
     {
-        GetTime();
+        double ms = GetTime();
+        LOG_TRACE("Timer: {0}: {1}ms", msg, ms);
+        std::cout << "Timer: " << msg << ": " << ms << "ms\n";
     }
 
     void Reset()
@@ -33,7 +35,6 @@ struct Timer
         double ms = duration.count() * 1000.0f;
 
         return ms;
-        //LOG_TRACE("Timer: {0}: {1}ms", msg, ms);
     }
 };
 

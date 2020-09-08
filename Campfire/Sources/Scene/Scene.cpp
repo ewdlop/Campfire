@@ -349,6 +349,8 @@ void Scene::OnRender(float dt, const Camera& camera)
     }
 
     // Render opaque meshes
+    /*
+    // TODO DISABLE RENDERING UNTIL mesh refactor to have no gl calls within mesh
     {
         ZoneScopedN("RenderMeshes");
         // Only render objects that have mesh components
@@ -362,6 +364,7 @@ void Scene::OnRender(float dt, const Camera& camera)
             }
         }
     }
+    */
 
     // Render Text objects
     {
