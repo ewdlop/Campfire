@@ -463,19 +463,19 @@ void EditorLayer::ShowMenuCampfire()
     if (ImGui::MenuItem("GitHub Repo"))
     {
         #ifdef  _WIN32
-            ShellExecuteA(NULL, "open", "https://github.com/danhuynh0803/Campfire", NULL, NULL, SW_SHOWDEFAULT);
+            ShellExecuteA(0, "open", "https://github.com/danhuynh0803/Campfire", 0, 0, SW_SHOWDEFAULT);
         #endif //  _WIN32
     }
     if (ImGui::MenuItem("Troubleshoot/Report Issues"))
     {
         #ifdef  _WIN32
-            ShellExecuteA(NULL, "open", "https://github.com/danhuynh0803/Campfire/issues", NULL, NULL, SW_SHOWDEFAULT);
+            ShellExecuteA(0, "open", "https://github.com/danhuynh0803/Campfire/issues", 0, 0, SW_SHOWDEFAULT);
         #endif //  _WIN32
     }
     if (ImGui::MenuItem("Documentation/Wiki"))
     {
         #ifdef  _WIN32
-            ShellExecuteA(NULL, "open", "https://github.com/danhuynh0803/Campfire/wiki", NULL, NULL, SW_SHOWDEFAULT);
+            ShellExecuteA(0, "open", "https://github.com/danhuynh0803/Campfire/wiki", 0, 0, SW_SHOWDEFAULT);
         #endif //  _WIN32
     }
     if (ImGui::MenuItem("Contact us"))
