@@ -1,6 +1,6 @@
-#ifdef Lua
-#include "Scripting/ScriptEngine.h"
-#ifdef  XXX
+#ifndef GameBuild
+#include <iostream>
+#ifdef  _WIN32
 #include<Windows.h>
 int main(int argc, char* argv[])
 {
@@ -48,9 +48,12 @@ int main(int argc, char* argv[])
     return 0;
 }
 #else
+#include<Scripting/ScriptEngine.h>
 int main(int argc, char* argv[])
 {
-    ScriptEngine engine;
+    //ScriptEngine engine;
+    Application app;
+    app.Run();
     return 0;
 }
 #endif
@@ -62,4 +65,4 @@ int main(int argc, char* argv[])
     app.Run();
     return 0;
 }
-#endif //Lua
+#endif //GameBuild
