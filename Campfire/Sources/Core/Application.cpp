@@ -1,24 +1,26 @@
 #include "Core/Application.h"
 #include "Core/Timer.h"
-#include "ImGui/ImGuiLayer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include "Core/Log.h"
 #include "Core/Time.h"
 #include "Core/Random.h"
 
 #include "Renderer/Renderer.h"
-#include "Editor/EditorLayer.h"
 #include "Physics/PhysicsManager.h"
 #include "JobSystem/JobSystem.h"
+
+#ifndef GameBuild
+#include "Core/Log.h"
+#include "ImGui/ImGuiLayer.h"
+#include "Editor/EditorLayer.h"
+#endif // !GameBuild
 
 Application* Application::instance = nullptr;
 
 Application::Application()
 {
-    Log::Init();
     Time::Init();
     Random::Init();
     JobSystem::Init();
@@ -30,11 +32,13 @@ Application::Application()
     PhysicsManager::Init();
     Renderer::Init();
 
+#ifndef GameBuild
+    Log::Init();
     PushLayer(new EditorLayer());
-
     // Imgui overlay
     imguiLayer = new ImGuiLayer();
     PushOverlay(imguiLayer);
+#endif // !GameBuild
 }
 
 Application::~Application()
