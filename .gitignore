@@ -6,3 +6,8 @@
 
 # blank files just to force libs to build
 null.cpp
+.vs/slnx.sqlite
+.vs/Campfire/v16/Browse.VC.opendb
+.vs/Campfire/v16/Browse.VC.db-wal
+.vs/Campfire/v16/Browse.VC.db-shm
+.vs/Campfire/v16/Browse.VC.db
