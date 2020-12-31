@@ -35,10 +35,10 @@ target_link_libraries(
         glfw
         lua
         tracy
+        Scripts
     PRIVATE
         BulletDynamics BulletCollision LinearMath
         stb
-        Scripts
 )
 
 #MACRO(SOURCE_GROUP_BY_FOLDER target)

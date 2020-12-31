@@ -36,12 +36,12 @@ Application::Application(const ApplicationProps& props)
 
     LuaManager::Init();
     LuaManager::SetEventCallback(std::bind(&Application::OnLuaEvent, this, std::placeholders::_1));
-    
+
     Renderer::Init();
     // FIXME physics manager uses a debug shader so for now it needs to be initialized after renderer
     PhysicsManager::Init();
     CommandManager::Init();
-    
+
     // TODO should be part of the overlay thats handled by each application instead of in the core engine
     // Imgui overlay
     imguiLayer = new ImGuiLayer();
