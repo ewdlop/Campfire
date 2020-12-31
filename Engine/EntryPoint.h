@@ -1,28 +1,12 @@
 #pragma once
 
-/*
-#include "Core/Application.h"
-#include "Core/ResourceManager.h"
-#include "Scripts/Script.h"
-
-extern Application* CreateApplication();
-
-int main(int argc, char * argv[])
-{
-
-    Application* app = CreateApplication();
-    app->Run();
-
-    return 0;
-}
-*/
-
+//Do this temporarily so linx build can still build
+#ifdef WIN32
 #include <cstdio>
 #include <string>
 #include <vector>
 #include <map>
 #include <cstdint>
-
 #include <Windows.h>
 
 #include "Scripts/NativeScript.h"
@@ -38,13 +22,13 @@ struct ReloadableCpp
 };
 
 // Checks if the DLL has been changed, and if so, reloads the functions from it.
-void Poll(ReloadableCpp& rcpp)
+bool Poll(ReloadableCpp& rcpp)
 {
     // Try opening the DLL's file
     HANDLE hDLLFile = CreateFileW(rcpp.DLLPath.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (hDLLFile == INVALID_HANDLE_VALUE)
     {
-        return;
+        return false;
     }
 
     // Check if the DLL has changed since we last loaded it.
@@ -74,18 +58,20 @@ void Poll(ReloadableCpp& rcpp)
                 }
                 rcpp.LastWrite = lastWriteTime;
             }
+            CloseHandle(hDLLFile);
+            return true;
         }
     }
-
     // Boy Scout Rule!
     CloseHandle(hDLLFile);
+    return false;
 }
 
-int main(int argc, char* argv[])
+int wmain(int argc, wchar_t* argv[])//tchar for unicode
 {
     // Get the name of the directory the .exe is in.
     // We are assuming that the .dll to live-reload is in the same directory.
-    std::wstring directory(argv[0], argv[0] + strlen(argv[0]));
+    std::wstring directory(argv[0], argv[0] + wcslen(argv[0]));//wsclen for wchar
     directory.erase(directory.find_last_of(L'\\') + 1);
 
     // Specify the path to the DLL and the functions we want to load from it.
@@ -93,23 +79,48 @@ int main(int argc, char* argv[])
     rcpp.DLLPath = directory + L"../../lib/Debug/Scriptsd.dll";
     rcpp.ProcsToLoad = { "CreateNativeScript" };
 
-    while (true)
+
+    if (Poll(rcpp))
     {
-        // Poll the DLL and update any live-reloaded function from it.
-        Poll(rcpp);
-
-        CREATE_SCRIPT pEntryPoint = (CREATE_SCRIPT)rcpp.Procs["CreateNativeScript"];
-        NativeScript* player = pEntryPoint();
-        if (player)
+        while (true)
         {
-            player->Start();
+            // Poll the DLL and update any live-reloaded function from it.
+            CREATE_SCRIPT pEntryPoint = (CREATE_SCRIPT)rcpp.Procs["CreateNativeScript"];
+            NativeScript* player = pEntryPoint();
+            if (player)
+            {
+                player->Start();
+            }
+            while (true)
+            {
+                player->Update();
+                if (Poll(rcpp)) break;
+            }
+
+            // Get the pointer to the live-reloaded function,
+            // and cast it to a function pointer type with the right signature.
+            //auto startPtr = (decltype(Start)*)rcpp.Procs["Start"];
+
+            // If loading the function pointer worked properly, we can call it.
+            //Sleep(1000);
         }
-        // Get the pointer to the live-reloaded function,
-        // and cast it to a function pointer type with the right signature.
-        //auto startPtr = (decltype(Start)*)rcpp.Procs["Start"];
-
-        // If loading the function pointer worked properly, we can call it.
-
-        Sleep(1000);
     }
+    //what should we do if first hotload fail?
+
+
+    return 0;
 }
+
+#else
+#include "Core/Application.h"
+#include "Core/ResourceManager.h"
+#include "Scripts/Script.h"
+
+int main()
+{
+    extern Application* CreateApplication();
+    Application* app = CreateApplication();
+    app->Run();
+    return 0;
+}
+#endif //  WIN32
