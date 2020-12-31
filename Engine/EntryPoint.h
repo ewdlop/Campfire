@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
 
 #include <Windows.h>
 
-#include "Scripts/Script.h"
+#include "Scripts/NativeScript.h"
 
 struct ReloadableCpp
 {
@@ -91,22 +91,24 @@ int main(int argc, char* argv[])
     // Specify the path to the DLL and the functions we want to load from it.
     ReloadableCpp rcpp;
     rcpp.DLLPath = directory + L"../../lib/Debug/Scriptsd.dll";
-    rcpp.ProcsToLoad = { "Start" };
+    rcpp.ProcsToLoad = { "CreateNativeScript" };
 
     while (true)
     {
         // Poll the DLL and update any live-reloaded function from it.
         Poll(rcpp);
 
+        CREATE_SCRIPT pEntryPoint = (CREATE_SCRIPT)rcpp.Procs["CreateNativeScript"];
+        NativeScript* player = pEntryPoint();
+        if (player)
+        {
+            player->Start();
+        }
         // Get the pointer to the live-reloaded function,
         // and cast it to a function pointer type with the right signature.
-        auto startPtr = (decltype(Start)*)rcpp.Procs["Start"];
+        //auto startPtr = (decltype(Start)*)rcpp.Procs["Start"];
 
         // If loading the function pointer worked properly, we can call it.
-        if (startPtr)
-        {
-            startPtr();
-        }
 
         Sleep(1000);
     }
