@@ -28,6 +28,7 @@ bool Poll(ReloadableCpp& rcpp)
     HANDLE hDLLFile = CreateFileW(rcpp.DLLPath.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (hDLLFile == INVALID_HANDLE_VALUE)
     {
+        std::wcout << L"Invalid file path";
         return false;
     }
 
@@ -61,13 +62,20 @@ bool Poll(ReloadableCpp& rcpp)
             CloseHandle(hDLLFile);
             return true;
         }
+        else
+        {
+            if (GetLastError() == ERROR_ACCESS_DENIED)
+            {
+                std::wcout << L"Access denied. Fail to copy the dll.";
+            }
+        }
     }
     // Boy Scout Rule!
     CloseHandle(hDLLFile);
     return false;
 }
 
-int wmain(int argc, wchar_t* argv[])//tchar for unicode
+int wmain(int argc, wchar_t* argv[])//wchar for unicode
 {
     // Get the name of the directory the .exe is in.
     // We are assuming that the .dll to live-reload is in the same directory.
