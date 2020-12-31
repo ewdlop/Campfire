@@ -38,6 +38,7 @@ target_link_libraries(
     PRIVATE
         BulletDynamics BulletCollision LinearMath
         stb
+        Scripts
 )
 
 #MACRO(SOURCE_GROUP_BY_FOLDER target)
