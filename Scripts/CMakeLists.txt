@@ -10,7 +10,7 @@ set(SCRIPT_SRC
 
 if(MSVC)
     add_compile_options(/W4)
-    add_compile_definitions(NATIVE_SCRIPT_EXPORTS)
+    add_compile_definitions(MAKE_DLL)
 endif()
 
 add_library(Scripts

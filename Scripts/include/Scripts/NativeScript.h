@@ -1,9 +1,9 @@
 #pragma once
 
-#ifdef NATIVE_SCRIPT_EXPORTS
-#define NATIVE_SCRIPT_API __declspec(dllexport)
+#ifdef MAKE_DLL
+#define EXPORT __declspec(dllexport)
 #else
-#define NATIVE_SCRIPT_API __declspec(dllexport)
+#define EXPORT __declspec(dllexport)
 #endif
 
 struct NativeScript
@@ -15,7 +15,7 @@ struct NativeScript
 
 extern "C"
 {
-    NATIVE_SCRIPT_API NativeScript* _cdecl CreateNativeScript();
+    EXPORT NativeScript* _cdecl CreateNativeScript();
 };
 
 typedef NativeScript* (*CREATE_SCRIPT) ();

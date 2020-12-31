@@ -4,14 +4,14 @@
 
 #include <iostream>
 
-NATIVE_SCRIPT_API NativeScript* _cdecl CreateNativeScript()
+EXPORT NativeScript* _cdecl CreateNativeScript()
 {
     return new Player;
 }
 
 void Player::Start()
 {
-    std::cout << "Start50\n";
+    std::cout << "Start from player script\n";
 }
 
 void Player::Update()
