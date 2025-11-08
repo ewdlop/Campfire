@@ -3,6 +3,8 @@
 ![Windows build](https://github.com/danhuynh0803/Campfire/workflows/Windows%20build/badge.svg)
 ![CodeQL](https://github.com/ewdlop/Campfire/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/ewdlop/Campfire/actions/workflows/github-code-scanning/codeql)
 
+> **Note:** This is a fork of the [original Campfire repository](https://github.com/danhuynh0803/Campfire) by danhuynh0803. See [ATTRIBUTION.md](ATTRIBUTION.md) for complete attribution and credit information.
+
 ## Summary
 Campfire is an in-progress game engine intended for use in small gamejam projects.
 
@@ -10,6 +12,15 @@ Campfire is an in-progress game engine intended for use in small gamejam project
 ![SampleScene](https://i.imgur.com/XzcOUaC.jpg)
 
 ## Build Instructions
+
+### For This Fork
+```bash
+git clone --recursive https://github.com/ewdlop/Campfire
+cd Campfire
+cd Build
+```
+
+### For Original Repository
 ```bash
 git clone --recursive https://github.com/danhuynh0803/Campfire
 cd Campfire
