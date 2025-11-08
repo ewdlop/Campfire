@@ -53,25 +53,38 @@ Entity Component System | [entt](https://github.com/skypjack/entt)
 
 ## Contributions by ewdlop
 
-### Portions worked on
-- Editor Layer
-- Vulkan Layer
-- Particle Effect System
-- File system operations
-- Lua Scripting integration
-- Hierarchy Widget
-- Inspector Widget
-- Transform Widget
-- Asset Browser
+This section details the specific contributions made to the Campfire game engine project.
 
-### Key features and improvements
-- Implemented the Editor Layer with scene management, user input processing, and rendering
-- Developed the Vulkan Layer for rendering using Vulkan API
-- Created the Hierarchy Widget for displaying and managing the scene hierarchy
-- Built the Inspector Widget for inspecting and modifying entity properties
-- Designed the Transform Widget for manipulating entity transforms
-- Developed the Asset Browser for browsing and managing assets
-- Implemented Particle Effect System
-- Added file system operations
-- Integrated Lua scripting support
+### Editor Layer (`Editor/`)
+**What:** Implemented the core editor infrastructure for the game engine  
+**Where:** `Editor/src/EditorLayer.cpp`, `Editor/include/EditorLayer.h`  
+**Why:** To provide a user-friendly interface for game development, enabling scene management, user input processing, and real-time rendering visualization
+
+### Vulkan Rendering Layer (`Editor/`, `Engine/Renderer/Vulkan/`)
+**What:** Developed the Vulkan-based rendering layer for modern graphics API support  
+**Where:** `Editor/src/VulkanLayer.cpp`, `Editor/include/VulkanLayer.h`, `Engine/Renderer/Vulkan/`  
+**Why:** To transition from OpenGL to Vulkan for improved performance, modern graphics features, and better hardware utilization
+
+### Editor UI Widgets (`Editor/Widgets/`)
+**What:** Created interactive UI components for editor functionality  
+**Where:**
+- Hierarchy Widget: `Editor/src/Widgets/HierarchyWidget.cpp` - Scene hierarchy visualization and management
+- Inspector Widget: `Editor/src/Widgets/InspectorWidget.cpp` - Entity property inspection and modification
+- Transform Widget: `Editor/src/Widgets/TransformWidget.cpp` - Entity transformation controls
+- Asset Browser: `Editor/src/Widgets/AssetBrowser.cpp` - Asset management and browsing interface  
+**Why:** To provide intuitive tools for scene editing, entity manipulation, and asset management
+
+### Particle Effect System (`Engine/Particles/`)
+**What:** Implemented a particle system for visual effects  
+**Where:** `Engine/Particles/src/ParticleSystem.cpp`, `Engine/Particles/include/Particles/`  
+**Why:** To enable dynamic visual effects like fire, smoke, explosions, and other particle-based phenomena in the engine
+
+### Lua Scripting Integration (`Engine/Scripting/`)
+**What:** Integrated Lua 5.4.0 scripting capabilities into the engine  
+**Where:** `Engine/Scripting/include/Scripting/`, `Engine/Events/include/Events/LuaEvent.h`  
+**Why:** To allow game logic to be written in Lua scripts, providing flexibility and rapid iteration without recompiling the engine
+
+### File System Operations
+**What:** Added file system utility functions and operations  
+**Why:** To support asset loading, scene serialization, and editor file management capabilities
 
