@@ -2,6 +2,8 @@
 ![Ubuntu build](https://github.com/danhuynh0803/Campfire/workflows/Ubuntu%20build/badge.svg)
 ![Windows build](https://github.com/danhuynh0803/Campfire/workflows/Windows%20build/badge.svg)
 ![CodeQL](https://github.com/ewdlop/Campfire/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/ewdlop/Campfire/actions/workflows/github-code-scanning/codeql)
+[![Ubuntu build](https://github.com/danhuynh0803/Campfire/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/danhuynh0803/Campfire/actions/workflows/c-cpp.yml)
+[![Windows build](https://github.com/danhuynh0803/Campfire/actions/workflows/windows-build.yml/badge.svg)](https://github.com/danhuynh0803/Campfire/actions/workflows/windows-build.yml)
 
 > **Note:** This is a fork of the [original Campfire repository](https://github.com/danhuynh0803/Campfire) by danhuynh0803. See [ATTRIBUTION.md](ATTRIBUTION.md) for complete attribution and credit information.
 
